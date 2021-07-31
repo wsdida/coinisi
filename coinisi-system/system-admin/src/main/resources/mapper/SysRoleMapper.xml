@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coinisi.system.admin.mapper.SysRoleMapper">
+
+    <resultMap type="com.coinisi.system.api.entity.SysRole" id="SysRoleMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="deleted" column="deleted" jdbcType="BOOLEAN"/>
+        <result property="identification" column="identification" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="BOOLEAN"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="DATE"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="DATE"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+    </resultMap>
+         <sql id="column">id,deleted,identification,sort,status,gmt_create,gmt_modified,name</sql>
+    <sql id="common_where">
+        <if test="name != null and name !=''">
+            and name = #{name}
+        </if>
+        <if test="identification != null and identification !=''">
+             and identification = #{identification}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        and deleted = '0'
+    </sql>
+     <select id="queryList" resultMap="SysRoleMap">
+      select
+         <include refid="column"/>
+         from sys_role
+         <where>
+             <include refid="common_where" />
+         </where>
+         order by sort
+     </select>
+
+    <select id="selectRole" resultType="com.coinisi.system.api.vo.SysSelectTreeVo" parameterType="java.lang.String">
+        select d.id as value,d.name as title from sys_role d,sys_user_role  r where
+                d.id = r.role_id
+             <if test="userId !=null and userId !=''">
+             and r.user_id = #{userId}
+             </if>
+    </select>
+    <select id="selectRoleTree" resultType="com.coinisi.system.api.vo.SysSelectTreeVo">
+        select d.id as value,d.name as title from sys_role d
+    </select>
+</mapper>
+

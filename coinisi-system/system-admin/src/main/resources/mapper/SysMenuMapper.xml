@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.coinisi.system.admin.mapper.SysMenuMapper">
+    <resultMap id="sysMenuMap" type="com.coinisi.system.api.entity.SysMenu">
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="icon" column="icon" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="path" column="path" jdbcType="VARCHAR"/>
+        <result property="component" column="component" jdbcType="VARCHAR"/>
+        <result property="redirect" column="redirect" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="visible" column="visible" jdbcType="INTEGER"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="sysMenuColumn">m.gmt_modified
+    ,m.id,m.icon,m.name,m.parent_id,m.path,m.component,m.redirect,m.sort,m.visible,m.gmt_create</sql>
+    <sql id="menuIf">
+        <if test="id !=null and id != ''">
+            and m.id =#{id}
+        </if>
+        <if test="name !=null and name != ''">
+            and m.name =#{name}
+        </if>
+        <if test="id !=null and id != ''">
+            and m.parentId =#{parentId}
+        </if>
+        <if test="id !=null and id != ''">
+            and m.component =#{component}
+        </if>
+    </sql>
+    <select id="selectListAll" resultType="com.coinisi.system.api.vo.SysMenuVo">
+        select<include refid="sysMenuColumn"/>from sys_menu m
+        <where>
+            <include refid="menuIf"/>
+        </where>
+    </select>
+
+    <select id="selectRoleMenu" resultType="com.coinisi.system.api.vo.SysMenuVo" parameterType="map">
+        select
+        <include refid="sysMenuColumn"/>
+        from sys_menu m ,sys_role_menu r where m.id=r.menu_id
+          <if test="sysMenu.visible !=null ">
+             and  visible = ${sysMenu.visible}
+          </if>
+          <if test="sysMenu.name !=null and sysMenu.name !=''">
+              and name like  CONCAT(CONCAT('%',#{sysMenu.name}),'%')
+          </if>
+         and r.role_id in
+        <foreach collection="list" item="list" open="(" close=")" separator=",">
+            #{list}
+        </foreach>
+    </select>
+    <select id="selectTreeVo" resultType="com.coinisi.system.api.vo.SysSelectTreeVo">
+        select m.id value,m.name title,m.parent_id parentId
+        from sys_menu m
+        where m.visible = '1'
+    </select>
+
+    <update id="updateMenu" parameterType="com.coinisi.system.api.entity.SysMenu">
+        update sys_menu
+         <set>
+        <if test="gmtModified !=null and gmtModified !=''">
+            gmt_modified = #{gmtModified},
+        </if>
+        <if test="icon !=null and icon !=''">icon = #{icon},</if>
+        <if test="name !=null and name !=''">name = #{name},</if>
+        <if test="parentId !=null and parentId !=''">parent_id = #{parentId},</if>
+        <if test="path !=null and path !=''">path = #{path},</if>
+        <if test="component !=null and component !=''">component = #{component},</if>
+        <if test="redirect !=null and redirect !=''">redirect = #{redirect},</if>
+        <if test="sort !=null and sort !=''">sort = #{sort},</if>
+        <if test="visible !=null and visible !=''">visible = #{visible},</if>
+         </set>
+         where id = #{id}
+
+    </update>
+</mapper>

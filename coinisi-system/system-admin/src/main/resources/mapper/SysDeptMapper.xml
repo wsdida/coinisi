@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.coinisi.system.admin.mapper.SysDeptMapper">
+    <resultMap type="com.coinisi.system.api.entity.SysDept" id="deptResultMap">
+        <result property="deleted" column="deleted"/>
+        <result property="email" column="email"/>
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="treePath" column="tree_path"/>
+        <result property="sort" column="sort"/>
+    </resultMap>
+    <select id="treeDept" resultType="com.coinisi.system.api.vo.SysDeptVo" parameterType="map">
+        select d.id,d.name,d.parent_id as parentId,d.parent_id as value,d.tree_path as treePath,
+        d.sort,d.gmt_modified,d.gmt_create,d.deleted,d.status,d.email,d.mobile,d.leader from sys_dept d where
+        d.deleted = '0'
+        <if test="name !=null and name != ''">
+            and d.name like CONCAT(CONCAT('%',#{name}),'%')
+        </if>
+        <if test="status !=null ">
+          and   d.status = #{status}
+        </if>
+    </select>
+    <select id="treeDeptVo" resultType="com.coinisi.system.api.vo.SysSelectTreeVo">
+        select d.id value,d.name title,d.parent_id as parentId
+        from sys_dept d
+        where d.status='1'
+    </select>
+</mapper>
