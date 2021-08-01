@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -33,15 +34,7 @@ public class SysDeptController {
 
     @ApiOperation(value = "部门树形结构", httpMethod = "GET")
     @GetMapping("/tree")
-    public R<List<SysDeptVo>> getTreeDept(@RequestParam Map<String,Object> map){
-        SysDeptVo sysDeptVo = new SysDeptVo();
-        if(map.get("name") != null){
-            sysDeptVo.setName(map.get("name").toString());
-        }
-       if(map.get("status") != null){
-           sysDeptVo.setStatus(Boolean.valueOf(map.get("status").toString()));
-       }
-
+    public R<List<SysDeptVo>> getTreeDept( SysDeptVo sysDeptVo ){
         return R.ok(service.treeDept(sysDeptVo));
     }
     @ApiOperation(value = "部门下拉框树形结构", httpMethod = "GET")
@@ -68,8 +61,8 @@ public class SysDeptController {
             @ApiImplicitParam(name = "id", value = "部门id", required = true, paramType = "path", dataType = "Long"),
     })
     @DeleteMapping("/delete")
-    public R delete(@PathVariable Long id){
-        return R.ok(service.removeById(id));
+    public R delete(@RequestParam("id") String id){
+        return R.ok(service.removeByIds(Arrays.asList(id.split(","))));
     }
 
 

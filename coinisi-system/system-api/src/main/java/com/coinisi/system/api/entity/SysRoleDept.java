@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 public class SysRoleDept {
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+    private String id;
     private String userId;
     private String deptId;
 }

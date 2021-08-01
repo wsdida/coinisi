@@ -62,7 +62,7 @@ public class SysRoleController {
         SysRole sysRole = new SysRole();
         sysRole.setGmtCreate(DateTime.now());
         Long id = Long.parseLong(map.get("id").toString());
-        sysRole.setId(id);
+        sysRole.setId(String.valueOf(id));
         sysRole.setIdentification(map.get("identification").toString());
         sysRole.setName(map.get("name").toString());
         sysRole.setSort(Integer.parseInt(map.get("sort").toString()));
@@ -91,7 +91,7 @@ public class SysRoleController {
         SysRole sysRole = new SysRole();
         sysRole.setGmtCreate(DateTime.now());
         Long id = IdUtils.snowflake();
-        sysRole.setId(id);
+        sysRole.setId(String.valueOf(id));
         sysRole.setIdentification(map.get("identification").toString());
         sysRole.setName(map.get("name").toString());
         sysRole.setSort(Integer.parseInt(map.get("sort").toString()));

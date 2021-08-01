@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,8 +38,8 @@ public class SysPostController {
     }
     @ApiOperation(value = "删除部门信息")
     @DeleteMapping("/delete")
-    public R<Boolean> deletePost(SysPost sysPost){
-        return R.ok(service.removeById(sysPost.getPostId()));
+    public R<Boolean> deletePost(@RequestParam("postId") String postId){
+        return R.ok(service.removeByIds(Arrays.asList(postId.split(","))));
     }
 
 }

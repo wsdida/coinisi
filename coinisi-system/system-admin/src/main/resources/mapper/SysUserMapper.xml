@@ -18,28 +18,31 @@
         <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
 
     </resultMap>
-    <sql id="userColumn">id,dept_id,deleted,username,nickname,gender,password,avatar,mobile,status,email,gmt_create,gmt_modified</sql>
+    <sql id="userColumn">u.id,u.dept_id,d.name deptName ,u.deleted,u.username,u.nickname,u.gender,u.password,u.avatar,u.mobile,u.status,u.email,u.gmt_create,u.gmt_modified</sql>
     <sql id="userIfConditions">
-      <if test="username !=null and username !=''">
-          and username =#{username}
+        u.deleted = '0'
+        and u.dept_id = d.id
+      <if test="sysUser.username !=null and sysUser.username !=''">
+          and u.username =#{sysUser.username}
       </if>
-        <if test="nickname !=null and nickname !=''">
-            and nickname like concat('%',#{nickname},'%')
+        <if test="sysUser.nickname !=null and sysUser.nickname !=''">
+            and u.nickname like concat('%',#{sysUser.nickname},'%')
         </if>
-        <if test="gender !=null and gender !=''">
-            and gender =#{gender}
+        <if test="sysUser.gender !=null and sysUser.gender !=''">
+            and u.gender =#{sysUser.gender}
         </if>
-        <if test="status !=null and status !=' '">
-            and status =#{status}
+        <if test="sysUser.status !=null and sysUser.status !=' '">
+            and status =#{sysUser.status}
         </if>
-        <if test="deptId != null and deptId != ''">
-           and  dept_id= #{deptId}
+        <if test="sysUser.deptId != null and sysUser.deptId != ''">
+           and  u.dept_id= #{sysUser.deptId}
         </if>
+
     </sql>
-    <select id="queryUserList" resultMap="sysUserMap">
+    <select id="queryUserList" resultType="com.coinisi.system.api.vo.SysUserVO" parameterType="com.coinisi.system.api.entity.SysUser">
         select
               <include refid="userColumn" />
-            from sys_user
+            from sys_user u ,sys_dept d
                  <where>
                     <include refid="userIfConditions"/>
                  </where>

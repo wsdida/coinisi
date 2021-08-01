@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
 public class SysUserPost {
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+    private String id;
     private String userId;
     private String postid;
 }

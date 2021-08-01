@@ -14,8 +14,7 @@
         <result property="visible" column="visible" jdbcType="INTEGER"/>
         <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
     </resultMap>
-    <sql id="sysMenuColumn">m.gmt_modified
-    ,m.id,m.icon,m.name,m.parent_id,m.path,m.component,m.redirect,m.sort,m.visible,m.gmt_create</sql>
+    <sql id="sysMenuColumn">distinct m.id,m.gmt_modified,m.icon,m.name,m.parent_id,m.path,m.component,m.redirect,m.sort,m.visible,m.gmt_create</sql>
     <sql id="menuIf">
         <if test="id !=null and id != ''">
             and m.id =#{id}

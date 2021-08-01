@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -23,11 +24,12 @@ import java.util.Date;
 @Accessors(chain = true)
 @TableName("sys_post")
 @ApiModel(value="Syspost对象", description="角色表")
-public class SysPost {
+public class SysPost implements Serializable {
+    private static final long serialVersionUID = 1L;
     @ApiModelProperty(value = "主键 ")
 
-    @TableId(value = "postId", type = IdType.ASSIGN_ID)
-    private Long postId;
+    @TableId(value = "post_id", type = IdType.ASSIGN_ID)
+    private String postId;
     @ApiModelProperty(value = "岗位编码")
     private String postCode;
     @ApiModelProperty(value = "岗位名称")

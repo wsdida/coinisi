@@ -36,6 +36,7 @@ public class SysUser implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
+
     @ApiModelProperty(value = "用户名")
     private String username;
 
@@ -50,7 +51,6 @@ public class SysUser implements Serializable {
 
     @ApiModelProperty(value = "部门ID")
     private Integer deptId;
-
     @ApiModelProperty(value = "删除标识（0未删除 1已删除）")
     private Boolean deleted;
 

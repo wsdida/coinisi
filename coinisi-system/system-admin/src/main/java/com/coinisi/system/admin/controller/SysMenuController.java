@@ -18,6 +18,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
@@ -85,7 +86,7 @@ public class SysMenuController {
          List<Long> authList= (List) redisTemplate.opsForHash().entries(UserConstant.USER_INFO).get("authorities");
          // 生成id
          Long id = IdUtils.snowflake();
-         menu.setId(id);
+         menu.setId(String.valueOf(id));
         SysRoleMenu sysRoleMenu = new SysRoleMenu();
         sysRoleMenu.setMenuId(id.toString());
         sysRoleMenu.setRoleId(String.valueOf(1));
@@ -94,9 +95,13 @@ public class SysMenuController {
     }
     @ApiOperation(value = "删除菜单")
     @DeleteMapping
-    public R deleteMenu(@RequestParam("id") Long id){
-        roleMenuService.remove(new LambdaQueryWrapper<SysRoleMenu>().eq(SysRoleMenu::getMenuId,id));
-        return R.ok(service.removeById(id));
+    public R deleteMenu(@RequestParam("id") String id){
+        List ids = Arrays.asList(id.split(","));
+        ids.forEach(item->{
+            roleMenuService.remove(new LambdaQueryWrapper<SysRoleMenu>().eq(SysRoleMenu::getMenuId,item));
+        });
+
+        return R.ok(service.removeByIds(ids));
     }
     @ApiOperation(value = "更新菜单")
     @PostMapping("/update")

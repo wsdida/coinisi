@@ -2,10 +2,15 @@ package com.coinisi.system.admin.controller;
 
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.coinisi.common.core.constant.UserConstant;
 import com.coinisi.system.admin.service.ISysUserService;
 import com.coinisi.system.api.entity.SysUser;
+import com.coinisi.system.api.vo.QueryCommon;
+import com.coinisi.system.api.vo.SysUserVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -15,6 +20,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
+import java.sql.Wrapper;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,6 +41,7 @@ public class SysUserController {
     private ISysUserService service;
     @Autowired
     private RedisTemplate redisTemplate;
+
     @ApiOperation(value = "获取用户信息",httpMethod = "GET")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "user", value = "实体类User", required = true, dataType = "sysUser"),
@@ -55,8 +63,8 @@ public class SysUserController {
             @ApiImplicitParam(name = "用户id", value = "id", required = true, dataType = "long"),
     })
     @GetMapping("/delete")
-    public  R deleteUser(@RequestParam("id") Integer id){
-        return R.ok(service.removeById(id));
+    public  R deleteUser(@RequestParam("id") String id){
+        return R.ok(service.removeByIds(Arrays.asList(id.split(","))));
     }
     @ApiOperation(value = "更新用户信息",httpMethod = "PUT")
     @ApiImplicitParams({
@@ -69,8 +77,13 @@ public class SysUserController {
 
     @ApiOperation(value = "查询用户信息",httpMethod = "GET")
     @GetMapping("/queryUser")
-    public R<List<SysUser>> queryUserList(SysUser sysUser){
-        return R.ok(service.queryUserList(sysUser));
+    public R<IPage<SysUserVO>> queryUserList(SysUser sysUser, QueryCommon queryCommon){
+
+        return R.ok(service.queryUserList(queryCommon,sysUser));
     }
 
+    public static void main(String[] args) {
+        String a ="1";
+        System.out.println();
+    }
 }

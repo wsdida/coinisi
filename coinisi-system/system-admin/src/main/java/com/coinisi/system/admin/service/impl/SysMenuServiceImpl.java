@@ -41,7 +41,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public List<SysSelectTreeVo> selectTreeVo() {
         List<SysSelectTreeVo> treeDeptVo=baseMapper.selectTreeVo();
-        return treeDeptVo.stream().filter(item ->0 == item.getParentId()).map(item -> {
+        return treeDeptVo.stream().filter(item ->"0" .equals( item.getParentId())).map(item -> {
             item.setChildren(SysDeptServiceImpl.getChildrenDept(item,treeDeptVo));
             return item;
         }).collect(Collectors.toList());

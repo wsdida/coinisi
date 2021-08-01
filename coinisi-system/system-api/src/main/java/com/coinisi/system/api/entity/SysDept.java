@@ -36,7 +36,7 @@ public class SysDept implements Serializable {
 
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+    private String id;
 
     @ApiModelProperty(value = "部门名称")
     private String name;

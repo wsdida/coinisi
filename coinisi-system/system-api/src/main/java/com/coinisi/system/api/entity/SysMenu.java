@@ -35,13 +35,13 @@ public class SysMenu implements Serializable {
 
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+    private String id;
 
     @ApiModelProperty(value = "菜单名称")
     private String name;
 
     @ApiModelProperty(value = "父菜单ID")
-    private Long parentId;
+    private String parentId;
 
     @ApiModelProperty(value = "路由路径")
     private String path;

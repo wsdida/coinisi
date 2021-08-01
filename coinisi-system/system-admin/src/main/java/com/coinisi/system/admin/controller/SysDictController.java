@@ -1,6 +1,7 @@
 package com.coinisi.system.admin.controller;
 
 
+import cn.hutool.core.lang.Dict;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.coinisi.system.admin.service.ISysDictItemService;
@@ -11,6 +12,7 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -47,8 +49,14 @@ public class SysDictController {
    }
 
    @DeleteMapping
-    public R<Boolean> deleteDict(SysDict sysDict){
-            dictItemService.remove(new LambdaQueryWrapper<SysDictItem>().eq(SysDictItem::getDictCode,sysDict.getCode()));
-       return R.ok(service.remove(new LambdaQueryWrapper<SysDict>().eq(SysDict::getCode,sysDict.getCode())));
+    public R<Boolean> deleteDict(@RequestParam("id")String id){
+       List a = Arrays.asList(id.split(","));
+       List<SysDict> dictList = service.list(new LambdaQueryWrapper<SysDict>().in(SysDict::getId,a));
+       dictList.forEach(item ->{
+           dictItemService.remove(new LambdaQueryWrapper<SysDictItem>().eq(SysDictItem::getDictCode,item.getCode()));
+       }
+       );
+
+       return R.ok(service.removeByIds(a));
    }
 }

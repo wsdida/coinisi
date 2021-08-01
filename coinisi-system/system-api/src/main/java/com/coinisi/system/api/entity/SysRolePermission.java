@@ -23,7 +23,7 @@ public class SysRolePermission implements Serializable {
     private static final long serialVersionUID = 486933681032227611L;
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+    private String id;
     /**
      * 角色id
      */

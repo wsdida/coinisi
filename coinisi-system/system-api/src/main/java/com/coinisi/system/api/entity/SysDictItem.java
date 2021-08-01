@@ -33,7 +33,7 @@ public class SysDictItem implements Serializable {
     @ApiModelProperty(value = "主键")
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+    private String id;
 
     @ApiModelProperty(value = "字典项名称")
     private String name;

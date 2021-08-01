@@ -1,8 +1,11 @@
 package com.coinisi.system.admin.service;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.coinisi.system.api.entity.SysUser;
+import com.coinisi.system.api.vo.QueryCommon;
+import com.coinisi.system.api.vo.SysUserVO;
 
 import java.util.List;
 
@@ -17,8 +20,8 @@ import java.util.List;
 public interface ISysUserService extends IService<SysUser> {
     /**
      * 查询用户条件
-     * @param user
+     * @param
      * @return
      */
-    List<SysUser> queryUserList(SysUser sysUser);
+    IPage<SysUserVO> queryUserList(QueryCommon queryCommon , SysUser sysUser);
 }

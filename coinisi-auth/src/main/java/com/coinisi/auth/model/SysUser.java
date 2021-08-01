@@ -14,8 +14,8 @@ import java.util.List;
 @TableName("sys_user")
 public class SysUser  {
 
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @TableId(type = IdType.ASSIGN_ID)
+    private String id;
 
     private String username;
 

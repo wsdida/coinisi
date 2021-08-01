@@ -35,7 +35,6 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                 childer.set(true);
             }
         });
-        System.out.println(childer.get());
         if(childer.get()){
             return   deptVoList.stream().filter(item ->0 == item.getParentId()).map(item -> {
                 item.setChildren(getChildren(item,deptVoList));
@@ -54,7 +53,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Override
     public List<SysSelectTreeVo> treeDeptVo() {
         List<SysSelectTreeVo> treeDeptVo=baseMapper.treeDeptVo();
-        return treeDeptVo.stream().filter(item ->0 == item.getParentId()).map(item -> {
+        return treeDeptVo.stream().filter(item ->"0".equals(item.getParentId())  ).map(item -> {
             item.setChildren(getChildrenDept(item,treeDeptVo));
             return item;
         }).collect(Collectors.toList());

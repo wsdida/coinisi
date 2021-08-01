@@ -13,7 +13,7 @@ public class SysSelectTreeVo {
 
     public String value;
     public String title;
-    public Long parentId;
+    public String parentId;
     public List<SysSelectTreeVo> children;
     public List<DeptStateVo> deptStateVos;
 
