@@ -18,7 +18,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/com","/rsa/publicKey").permitAll()
+                .antMatchers("/com","/rsa/publicKey","/oauth/token/**").permitAll()
                 .anyRequest().authenticated();
     }
 

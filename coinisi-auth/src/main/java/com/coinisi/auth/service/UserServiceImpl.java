@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserDetailsService {
                     roles.add(item.getRoleId().toString());
         });
 
-        SecurityUser securityUser = new SecurityUser(new UserDTO(user.getId(), user.getUsername(),user.getPassword(),1,roles));
+        SecurityUser securityUser = new SecurityUser(new UserDTO(Long.parseLong(user.getId()), user.getUsername(),user.getPassword(),1,roles));
         return securityUser;
     }
 

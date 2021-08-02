@@ -31,8 +31,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Override
     public IPage<SysUserVO> queryUserList(QueryCommon queryCommon , SysUser sysUser) {
-        SysUserVO userVO = new SysUserVO();
-
         Page<SysUserVO> page = new Page(queryCommon.getCurrent(),queryCommon.getSize());
         return baseMapper.queryUserList(page, sysUser);
     }

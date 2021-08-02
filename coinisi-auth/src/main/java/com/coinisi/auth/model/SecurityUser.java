@@ -41,7 +41,7 @@ public class SecurityUser implements UserDetails {
     }
 
     public SecurityUser(UserDTO userDTO) {
-        this.setId(userDTO.getId());
+        this.setId(userDTO.getId().toString());
         this.setUsername(userDTO.getUsername());
         this.setPassword(userDTO.getPassword());
         this.setEnabled(userDTO.getStatus() == 1);

@@ -40,9 +40,9 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         if (StrUtil.isEmpty(token)) {
             return chain.filter(exchange);
         }
-        try {
+     try {
 
-            //从token中解析用户信息并设置到Header中去
+           //从token中解析用户信息并设置到Header中去
             String realToken = token.replace("Bearer ", "");
             JWSObject jwsObject = JWSObject.parse(realToken);
             String userStr = jwsObject.getPayload().toString();
