@@ -25,6 +25,8 @@
          and login_name like concat ('%',#{sysLog.loginName},'%')
      </if>  <if test="sysLog.loginStatus !=null and sysLog.loginStatus != '' ">
          and login_status = #{sysLog.loginStatus}
-     </if>  
+     </if>   <if test="sysLog.system !=null and sysLog.system != '' ">
+         and system like concat ('%',#{sysLog.system},'%')
+     </if>
   </select>
 </mapper>

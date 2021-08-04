@@ -2,8 +2,10 @@ package com.coinisi.system.admin.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.coinisi.system.api.entity.SysFile;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,6 +17,7 @@ import java.util.List;
  */
 @Mapper
 public interface SysFileMapper extends BaseMapper<SysFile> {
+    IPage<SysFile> selectFile(@Param("sysFile")SysFile sysFile,@Param("page") IPage<SysFile> page);
 
 
 }

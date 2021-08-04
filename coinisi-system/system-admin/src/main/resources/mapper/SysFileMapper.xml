@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.coinisi.system.dao.SysFileDao">
+<mapper namespace="com.coinisi.system.admin.mapper.SysFileMapper">
     <resultMap type="com.coinisi.system.api.entity.SysFile" id="SysFileMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="type" column="type" jdbcType="INTEGER"/>
@@ -11,5 +11,22 @@
         <result property="isDelete" column="is_delete" jdbcType="VARCHAR"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
     </resultMap>
+    <sql id="commonSql"> select id,type,name,current_name,url,size,remark from sys_file</sql>
+    <sql id="where_if">
+        <where>
+            <if test="sysFile.name !=null and sysFile.name !=''">
+             and name like concat('%',#{sysFile.name},'%')
+            </if>
+            <if test="sysFile.type !=null and sysFile.type !=''">
+             and type =#{type}
+            </if>
+
+
+        </where>
+    </sql>
+    <select id="selectFile" resultMap="SysFileMap" parameterType="com.coinisi.system.api.entity.SysFile">
+        <include refid="commonSql" />
+        <include refid="where_if" />
+    </select>
 </mapper>
 
